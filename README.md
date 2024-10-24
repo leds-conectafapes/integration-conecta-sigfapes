@@ -29,8 +29,22 @@ This entire process is orchestrated using **Hangfire**, which allows the process
 
 ## Project Structure
 
-- **ApiSource**: Responsible for fetching data from an external source (API).
-- **DataTransformer**: Transforms raw data (JSON) into structured objects.
+- **UserSource**: Responsible for fetching data from an external source (API).
+- **UserTransformer**: Transforms raw data (JSON) into structured objects.
 - **ConsoleSink**: Prints the transformed data to the console.
-- **SourceTransformSinkService**: Orchestrates the whole process by combining Source, Transform, and Sink.
+- **ProcessFromAPIToConsole**: Orchestrates the whole process by combining Source, Transform, and Sink.
+
+## Running the Application
+
+To run this application locally:
+
+1. Clone the repository and navigate to the project directory.
+2. Install Hangfire dependencies by running `dotnet restore`.
+3. Start the application by running `dotnet run`.
+4. The **Hangfire Dashboard** will be available at [http://localhost:5000/](http://localhost:5000/).
+5. Hangfire will execute the **Source-Transform-Sink** process every minute.
+
+## Conclusion
+
+This project demonstrates how to implement the **Source-Transform-Sink** pattern in an ASP.NET Core application. It also shows how to use **Hangfire** for background job scheduling to automate the process of fetching, transforming, and processing data.
 
