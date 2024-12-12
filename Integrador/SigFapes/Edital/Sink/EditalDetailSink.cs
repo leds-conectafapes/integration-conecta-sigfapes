@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Integrador.SigFapes.Edital.Model;
 using Integrador.SigFapes.Edital.Process;
+using Integrador.Util;
 
 namespace Integrador.SigFapes.Edital.Sink;
 
@@ -29,21 +30,14 @@ public class EditalDetailSink: IEditalDetailSink
     {
         try
         {
-            var content = JsonSerializer.Serialize(editalJson, new JsonSerializerOptions 
-            { 
-                WriteIndented = true 
-            });
+            var cleanedJson = JsonCleaner.CleanJson(editalJson);
             
             var fileName = $"edital_{editalId}_{DateTime.Now:yyyyMMdd_HHmmss}.json";
             var filePath = Path.Combine(_baseDirectory, fileName);
 
             // Salva o arquivo
-            await File.WriteAllTextAsync(filePath, editalJson, Encoding.UTF8);
-
-            _logger.LogInformation($"Arquivo salvo em: {filePath}");
-            _logger.LogInformation($"Conteúdo: {editalJson}");
-
-            _logger.LogInformation($"Processamento concluído para EditalId: {editalId}");
+            await File.WriteAllTextAsync(filePath, cleanedJson, Encoding.UTF8);
+                 _logger.LogInformation($"Processamento concluído para EditalId: {editalId}");
             
             await Task.CompletedTask;
         }
